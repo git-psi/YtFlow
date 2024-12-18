@@ -1,0 +1,11 @@
+# Ignore tous les fichiers .env (incluant .env.local, .env.development, etc.)
+**/.env*
+
+# Ignore tous les fichiers .txt dans tous les dossiers
+**/*.txt
+
+# Ignore node_modules directory in all folders
+node_modules/
+
+# Ignore dist directory in all folders
+dist/

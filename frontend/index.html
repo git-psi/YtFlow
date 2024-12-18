@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr" style="height: 100%;">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Title of the application -->
+    <title>YtFLow</title>
+    <!-- Include Bootstrap -->
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <!-- Bootstrap icon -->
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <div id="alertContainer" class="position-fixed bottom-0 start-0 end-0 p-3 center position-relative pe-none" style="z-index: 1000; height: 100px;">
+    <!-- Alerts will be added here -->
+  </div>
+
+  <div id="onboardingDiv" class="position-fixed bottom-0 top-0 start-0 end-0 center bg-black z-3">
+    <div class="text-white text-center">
+      <p id="onboardingTitle" class="m-0 fs-1 fw-bold" style="user-select: none;">Bienvenue</p>
+      <p id="onboardingSubtitle" class="m-0" style="user-select: none;">Regardons ce que tu peux faire de plus près</p>
+    </div>
+  </div>
+
+  <body class="overflow-hidden" style="height: 100%;">
+    <div class="d-flex flex-row" style="height: 100%">
+      <!-- Container of the page -->
+      <div class="p-2 pb-0 mb-2 overflow-auto d-flex justify-content-center" style="width: 100%;">
+
+        <!-- Left part of the screen -->
+        <div style="width: 100%; max-width: 1140px;" id="totalLeftPartHeight">
+          <div id="topLeftPart">
+            <!-- Div for search bar, and buttons for download -->
+            <div class="d-flex flex-row justify-content-center align-items-center">
+  
+              <form id="searchBarForm" class="input-group me-3"
+                data-bs-toggle="popover"
+                data-bs-trigger="manual"
+                title="Barre de recherche"
+                data-bs-content="Tu peux coller l'url d'un vidéo youtube ou directement effectuer une recherche en rentrant des mots clés">
+                
+                <input type="text" id="searchBarInput" class="form-control border-primary" placeholder="Rechercher ou coller une URL">
+  
+                <button id="searchBarButton" class="btn btn-primary" type="submit" id="button-addon1">
+                  <i class="bi bi-search only-search"></i>
+                  <i class="bi bi-plus only-add" style="transform: scale(1.3);"></i>
+                </button>
+              </form>
+              <button id="spotifyPlaylistsBtn" class="btn btn-success d-flex align-items-center" style="white-space: nowrap;"><img src="../img/spotify.svg" alt="Playlist Spotify" class="me-2" style="height: 20px; width: 20px;"/>Playlist Spotify</button>
+            </div>
+            <div class="input-group mt-3 w-100 d-flex flex-row">
+              <button class="download-all btn btn-primary flex-grow-1" format="prechoose" style="white-space: nowrap;">Tout télécharger</button>
+              <div class="bg-primary-hover" style="height: 38px; width: 3px;"></div>
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Format spécifique</button>
+              <ul class="dropdown-menu">
+                <li><button class="download-all dropdown-item" format="mp3">Télécharger en Audio</button></li>
+                <li><a class="download-all dropdown-item" format="mp4">Télécharger en Vidéo</a></li>
+              </ul>
+            </div>
+
+            <hr style="margin-left: 25px; width: calc(100% - 50px);">
+            
+          </div>
+  
+          <!-- List of all music added -->
+          <div id="musicList" class="mt-4 position-relative onboarding-bg-body" style="min-height: calc(100% - 200px);"
+            data-bs-toggle="popover" 
+            data-bs-trigger="manual"
+            title="Liste des musiques ajoutées" 
+            data-bs-content="Chaque musique (ou vidéo) que tu rajoute se retrouve ici, tu peux modifier ces informations avant de la télécharger">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right part of the screen, downloading musics -->
+      <div class="bg-body-secondary shadow-sm d-flex flex-column justify-content-between" style="height: 100%;" id="totalRightPartHeight">
+        <div class="secondary-scrollbar overflow-auto p-2 onboarding-bg-body h-100" id="downloadQueue"
+          data-bs-toggle="popover" 
+          data-bs-trigger="manual"
+          title="Liste de téléchargement" 
+          data-bs-content="Ici est la file d'attente pour le téléchargement des musiques">
+
+          <!-- Div for the list of downloading musics -->
+          <div class="d-flex flex-column align-items-center mt-2">
+            <h5 class="mb-0">Liste de téléchargement</h5>
+            <hr style="width: 250px;">
+          </div>
+
+          <!-- Div for the pause button, when there is an error -->
+          <div class="alert alert-secondary only-download-paused" role="alert">
+            Le téléchargement est en pause
+            <button class="btn btn-primary" id="restartDownloadingBtn">Relancer</button>
+            <button class="btn btn-secondary" id="goToNextDownloadBtn">Passer</button>
+          </div>
+        </div>
+
+        <!-- Div for the settings button -->
+        <div class="w-100 d-flex flex-column align-items-center mb-3 px-2">
+          <hr style="width: 250px;">
+          <div class="w-100 d-flex flex-row">
+            <button class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#settingModal"><i class="bi bi-gear"></i>&nbsp;Paramètres</button>
+            <button class="btn btn-secondary ms-2" id="openFolderBtn"><i class="bi bi-folder"></i></button>
+          </div>
+        </div>
+      </div>
+
+    <!-- Modal that contain the youtube video -->
+    <div id="viewVideoModal" class="modal modal-lg" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- Name of the youtube video -->
+            <h5 class="modal-title" id="viewVideoTitle"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Frame of the youtube video -->
+            <iframe id="viewVideoFrame" style="width: 100%; aspect-ratio: 16/9;" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen autoplay class="rounded"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal that contain a spotify playlist iframe -->
+    <div id="spotifyModal" class="modal modal-lg" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Ecoute d'une playlist spotify</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body"">
+            <!-- Frame of the spotify playlist -->
+            <iframe id="spotifyFrame" style="border-radius:12px; min-height: 360px; height: 60vh;" src="" width="100%" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal that contain all settings -->
+    <div id="settingModal" class="modal modal-lg" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" style="min-width: 700px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Paramètres</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+
+              <div id="hidden-span" class="position-absolute" style="white-space: pre; visibility: hidden;"></div>
+              
+              <!-- Section for download settings -->
+              <div class="setting-section d-flex justify-content-between align-items-center w-100 mt-0"><div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div>Téléchargement<div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div></div>
+              <div class="bg-body-tertiary rounded">
+                <div class="py-2 px-3 flex-row d-flex justify-content-between align-items-center">
+                  <div class="d-flex flex-column">
+                    <b class="fw-bold text-body-secondary">Dossier de téléchargement</b>
+                    Le dossier qui contient tous les fichiers téléchargés.
+                  </div>
+                  <button id="chooseFolderBtn" class="border-0 p-0 bg-transparent" data-bs-toggle="tooltip" data-bs-title="tooltip name">
+                    <input id="folderPath" type="text" class="pe-none form-control" value="Choisir"  style="max-width: 200px;">
+                  </button>
+                </div>
+                <!-- Separator -->
+                <!-- <div class="bg-body-secondary w-100" style="height: 3px;"></div> -->
+              </div>
+
+              <!-- Section for search settings -->
+              <div class="setting-section d-flex justify-content-between align-items-center w-100"><div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div>Recherche<div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div></div>
+              <div class="bg-body-tertiary rounded">
+                <div class="py-2 px-3 flex-row d-flex justify-content-between align-items-center">
+                  <div class="d-flex flex-column">
+                    <b class="fw-bold text-body-secondary">Prendre le premier choix</b>
+                    Lors d'une recherche, prendre automatiquement la première vidéo au lieu de présenter un choix.
+                  </div>
+                  <div class="ms-3 form-control-lg form-switch">
+                    <input id="firstResultToggle" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section for update settings -->
+              <div class="setting-section d-flex justify-content-between align-items-center w-100"><div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div>Mise&nbsp;à&nbsp;jour<div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div></div>
+              <div class="bg-body-tertiary rounded">
+                <div class="py-2 px-3 flex-row d-flex justify-content-between align-items-center">
+                  <div class="d-flex flex-column">
+                    <b class="fw-bold text-body-secondary">Mise à jour automatique</b>
+                    Le logiciel se mettra à jour automatiquement lors de son lancement.
+                  </div>
+                  <div class="ms-3 form-control-lg form-switch">
+                    <input id="automaticUpdateToggle" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section for connection settings -->
+              <div class="setting-section d-flex justify-content-between align-items-center w-100"><div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div>Connexion<div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div></div>
+              <div class="bg-body-tertiary rounded">
+                <!-- First setting -->
+                <div class="py-2 px-3 flex-row d-flex justify-content-between align-items-center">
+                  <div class="d-flex flex-column">
+                    <b class="fw-bold text-body-secondary">Spotify</b>
+                    Se connecter ou changer de compte Spotify.
+                  </div>
+                  <div class="ms-3">
+                    <button id="spotifyConnectBtn" class="btn btn-secondary" type="submit">Connexion</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section for restart from scratch -->
+              <div class="setting-section d-flex justify-content-between align-items-center w-100"><div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div>Application<div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div></div>
+              <div class="bg-body-tertiary rounded">
+                <!-- First setting -->
+                <div class="py-2 px-3 flex-row d-flex justify-content-between align-items-center">
+                  <div class="d-flex flex-column">
+                    <b class="fw-bold text-body-secondary">Repartir de zéro</b>
+                    Tout remettre à zéro, les paramètres, les comptes connectés, ...
+                  </div>
+                  <div class="ms-3">
+                    <button id="resetSettingsBtn" class="btn btn-danger">Tout oublier</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- Div for save and cancel buttons -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" id="saveSettingsBtn" class="btn btn-primary">Sauvegarder</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal that contain new update infos -->
+    <div id="updateAvailableModal" class="modal modal-lg" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- Name of the youtube video -->
+            <h5 class="modal-title">Une nouvelle version est disponible !</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            La version <span class="badge text-bg-secondary" id="newVersionNumber"></span> est maintenant disponible !
+            Vous êtes actuellement à la version <span class="badge text-bg-secondary" id="currentVersionNumber"></span>.<br>
+
+            <div id="updateVersionsDesc"></div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            <button type="button" id="updateButton" class="btn btn-primary">Mettre à jour</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for search all things (music, spotify playlists, etc...) -->
+    <div id="searchModal" class="modal modal-lg" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="searchModalTitle"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body position-relative" style="min-height: 300px;">
+            
+            <!-- Container for search results -->
+            <div id="allResults">
+              <!-- Loading spinner shown while searching -->
+              <div id="searchLoader" class="position-absolute top-0 bottom-0 start-0 end-0 center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                  <span class="visually-hidden"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Message shown below search results (hidden by default) -->
+            <p class="text-secondary fst-italic mt-3 mb-0 d-none" id="searchModalMessage" style="letter-spacing: -0.3px; font-size: 14px;"></p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal to ask confirmation -->
+    <div id="askConfimartionModal" class="modal modal-lg" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="askConfimartionModalTitle"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="askConfimartionModalBody"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" id="askConfimartionModalBtn" class="btn">Quitter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Include all js script -->
+    <script src="./js/onboarding.js"></script>
+    <script src="./js/quitApp.js"></script>
+    <script src="./js/renderer.js"></script>
+    <script src="./js/alert.js"></script>
+    <script src="./js/setting.js"></script>
+    <script src="./js/update.js"></script>
+    <script src="./js/searchVideo.js"></script>
+    <script src="./js/searchSpotifyPlaylist.js"></script>
+    <script src="./js/musicItem.js"></script>
+    <script src="./js/downloadMusic.js "></script>
+    <script src="./js/askConfirmationModal.js "></script>
+  </body>
+</html>

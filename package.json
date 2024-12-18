@@ -10,7 +10,7 @@
     "appId": "com.ytflow.id",
     "productName": "YtFlow",
     "executableName": "YtFlow",
-    "artifactName": "YtFlow-Setup-${version}.${ext}",
+    "artifactName": "YtFlow-Setup-windows.${ext}",
     "icon": "build/icon.ico",
     "win": {
       "icon": "build/icon.ico",

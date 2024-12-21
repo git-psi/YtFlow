@@ -1,8 +1,50 @@
 const { session } = require('electron');
+const { exec } = require('child_process');
+const os = require('os');
+const path = require('path');
+const fs = require('fs');
+
+const homeDir = os.homedir();
+const platform = process.platform;
+let musicDir = homeDir;
+
+if (platform === 'win32') {
+    // On Windows, "Music" can be in "Documents\Music" or just "Music"
+    musicDir = path.join(homeDir, 'Music');
+} else if (platform === 'darwin') {
+    // On macOS, it's typically "Music"
+    musicDir = path.join(homeDir, 'Music');
+} else {
+    // On Linux, check the XDG config file
+    const xdgConfigPath = path.join(homeDir, '.config', 'user-dirs.dirs');
+
+    if (fs.existsSync(xdgConfigPath)) {
+        const fileContent = fs.readFileSync(xdgConfigPath, 'utf8');
+        const match = fileContent.match(/^XDG_MUSIC_DIR=(.*)$/m);
+  
+        if (match) {
+            musicDir = match[1].trim();
+
+            // Remove any quotes if present
+            if (musicDir.startsWith('"') && musicDir.endsWith('"')) {
+                musicDir = musicDir.slice(1, -1);
+            }
+
+            // Replace $HOME with the actual user home path
+            if (musicDir.startsWith('$HOME')) {
+                musicDir = musicDir.replace('$HOME', homeDir);
+            }
+    }}
+}
+
+// Check if directory exists, if not create it
+if (!fs.existsSync(musicDir)) {
+    musicDir = homeDir;
+}
 
 // Name of all existing settings with their default values
 const defaultSettings = {
-    selectedFolder: '',
+    selectedFolder: musicDir,
     automaticUpdate: false,
     firstResult: false,
     onboardingCompleted: false,
@@ -47,14 +89,35 @@ module.exports = (store, win, dialog, shell, app) => {
     // Function to open the folder
     async function openFolder() {
         const folderPath = store.get('selectedFolder', 0);
-        if (folderPath){
+        if (folderPath) {
             try {
-                shell.openPath(folderPath);
+                if (process.platform === 'linux') {
+                    // On Linux, use specific command to open file manager
+                    return new Promise((resolve, reject) => {
+                        // First try with nautilus (GNOME)
+                        exec(`nautilus "${folderPath}"`, (error) => {
+                            if (error) {
+                                // If nautilus fails, try with dolphin (KDE)
+                                exec(`dolphin "${folderPath}"`, (error) => {
+                                    if (error) {
+                                        // As last resort, use shell.openPath
+                                        shell.openPath(folderPath);
+                                    }
+                                    resolve();
+                                });
+                            }
+                            resolve();
+                        });
+                    });
+                } else {
+                    // On Windows and macOS, use shell.openPath
+                    await shell.openPath(folderPath);
+                }
             } catch (error) {
-                console.log(error)
-                return {error: 'Erreur lors de l\'ouverture du dossier'}
+                console.log(error);
+                return {error: 'Error opening folder'}
             }
-        }else return {error: 'Aucun dossier sélectionné, voir dans les paramètres'}
+        } else return {error: 'No folder selected, check settings'}
     }
 
     // Function to restart from scratch

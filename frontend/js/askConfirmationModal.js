@@ -18,7 +18,7 @@ async function askConfimartion(title="", content="", btnColor="danger", reopenOl
             if (modalInstance) {
                 bootstrapModalActiveEvent = false
                 modalInstance.hide()
-                openModal = modalInstancel 
+                openModal = modalInstance
                 bootstrapModalActiveEvent = true
             }
         });

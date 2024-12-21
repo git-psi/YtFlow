@@ -5,12 +5,11 @@ let onboardingInProgress = true
 
 
 const popoverList = [];
-//popoverList.push(document.getElementById('searchBarForm'), document.getElementById('musicList'), document.getElementById('downloadQueue'))
 [document.getElementById('searchBarForm'), document.getElementById('musicList'), document.getElementById('downloadQueue')].forEach(e => {
     popoverList.push([e, new bootstrap.Popover(e, {html: true, sanitize: false})])
 });
 
-window.electronAPI.getSetting('onboardingCompleted').then((onboardingCompleted) => {
+const onBoardingAlreadyCompleted = window.electronAPI.getSetting('onboardingCompleted').then((onboardingCompleted) => {
     if (!onboardingCompleted) {
         onboardingDiv.classList.add('view');
         setTimeout(() => {
@@ -28,21 +27,20 @@ window.electronAPI.getSetting('onboardingCompleted').then((onboardingCompleted) 
             }, 2000);
         }, 2000);
     } else {
-        onboardingDiv.style.display = 'none'; // Hide onboarding if already completed
-        popoverList.forEach(popover => {
-            new bootstrap.Popover(popover, {
-                trigger: 'manual',
-                html: true,
-                sanitize: false
-            });
-        });
+        completeOnboarding();
     }
-})
+});
+
 
 // After onboarding is completed, set the flag
 function completeOnboarding() {
-    window.electronAPI.saveSettings([['onboardingCompleted', true]]);
+    if (!onBoardingAlreadyCompleted) {
+        window.electronAPI.saveSettings([['onboardingCompleted', true]]);
+    }
     onboardingInProgress = false
+    if (haveToOpenUpdateModal) {
+updateModal.show()
+    }
 }
 
 function showPopover(num = 0) {

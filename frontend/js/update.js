@@ -35,22 +35,3 @@ updateButton.addEventListener('click', () => {
     // Tell main process to start update
     window.electronAPI.update();
 })
-
-updateVersionDesc.innerHTML = `
-    <div class="mt-3">
-        <div class="d-flex justify-content-between align-items-center w-100"><div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div>vwait ???<div class="mx-2 bg-secondary w-100 rounded-5" style="height: 3px;"></div></div>
-        <div class="mx-3">
-            allo
-        </div>
-    </div>`
-
-// Set version numbers in modal
-newVersionNumber.innerText = "1.1.1"
-currentVersionNumber.innerText = 'txt'
-
-if (!onboardingInProgress){
-    // Show the update modal
-    updateModal.show()
-}else {
-    haveToOpenUpdateModal = true
-}

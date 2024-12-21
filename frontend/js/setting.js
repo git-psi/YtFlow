@@ -106,9 +106,11 @@ settingModal.addEventListener('', function (event) {
 
 // Reset settings when reset button clicked
 document.getElementById('resetSettingsBtn').addEventListener('click', async () => {
-    const confirmation = confirm("Êtes-vous sûr de vouloir tout réinitialiser ? Cela supprimera toutes les configurations et les sessions ouvertes.");
-    if (confirmation) {
-        // Reset settings to default values
-        window.electronAPI.forgetAll();
-    }
+    askConfimartion("Réinitialiser", "Êtes-vous sûr de vouloir tout réinitialiser ? Cela supprimera toutes les configurations et les comptes connectés.").then(accept => {
+        if (accept) {
+            // Reset settings to default values
+            window.electronAPI.forgetAll();
+        }
+    })
+
 });

@@ -1,6 +1,6 @@
 {
   "name": "ytflow",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "repository": "https://github.com/git-psi/YtFlow",
   "publish": {
     "provider": "github",
@@ -10,20 +10,17 @@
     "appId": "com.ytflow.id",
     "productName": "YtFlow",
     "executableName": "YtFlow",
-    "artifactName": "YtFlow-Setup-windows.${ext}",
-    "icon": "build/icon.ico",
     "win": {
       "icon": "build/icon.ico",
-      "target": ["nsis"]
+      "target": ["nsis"],
+      "artifactName": "YtFlow-Setup-windows.${ext}"
     },
     "linux": {
       "icon": "build/icon.png",
-      "target": [
-        "AppImage",
-        "deb",
-        "rpm"
-      ],
-      "category": "Audio"
+      "target": ["deb","AppImage"],
+      "artifactName": "YtFlow.${ext}",
+      "category": "Audio",
+      "executableArgs": ["--no-sandbox"]
     }
   },
   "main": "backend/main.js",
@@ -33,9 +30,12 @@
     "dist:linux": "electron-builder --linux"
   },
   "keywords": [],
-  "author": "Félix Perdu",
+  "author": {
+    "name": "Felix Perdu",
+    "email": "perdu.felix@proton.me"
+  },
   "license": "ISC",
-  "description": "description",
+  "description": "Une application permettant de télécharger des musiques/vidéos depuis YouTube.",
   "devDependencies": {
     "@electron/packager": "^18.3.4",
     "electron": "^32.0.1",

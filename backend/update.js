@@ -4,7 +4,7 @@ autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = false;
 
 module.exports = (win, app, settingJS) => {
-    autoUpdater.on('update-available', async (info) => {    
+    autoUpdater.on('update-available', async (info) => {   
         const automaticUpdate = await settingJS.getSetting(0, 'automaticUpdate')
         if (automaticUpdate){
             // Hide the window and show a notification

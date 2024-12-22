@@ -26,9 +26,11 @@ Vous pouvez télécharger l'application dans les formats suivants :
 ## Problème possibles
 <details>
     <summary>
-        Lors de son installation sur Windows, l'application est arrété par l'antivirus
+        Lors de son installation sur Windows, l'application est arrêtée par l'antivirus
     </summary>
-    N'ayant pas de certificat, l'application peux se faire arréter par l'antivirus, vous pouvez alors choisir de ne pas l'installer ou cliquer sur "More Info" puis "Run anyway".
+    N'ayant pas de certificat, l'application peut être arrêtée par l'antivirus. Vous pouvez alors choisir de ne pas l'installer ou cliquer sur "More Info" puis "Run anyway".
+    <br>
+    <img src="https://github.com/git-psi/YtFlow/blob/main/img/screenshot-win-antivirus.png" alt="Screenshot Windows Antivirus" style="max-width:100%;">
 </details>
 <details>
     <summary>

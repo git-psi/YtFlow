@@ -28,16 +28,20 @@ Vous pouvez télécharger l'application dans les formats suivants :
     <summary>
         Lors de son installation sur Windows, l'application est arrêtée par l'antivirus
     </summary>
-    N'ayant pas de certificat, l'application peut être arrêtée par l'antivirus. Vous pouvez alors choisir de ne pas l'installer ou cliquer sur "More Info" puis "Run anyway".
-    <br>
-    <img src="https://github.com/git-psi/YtFlow/blob/main/img/screenshot-win-antivirus.png" alt="Screenshot Windows Antivirus" style="max-width:100%;">
+    <blockquote>
+        N'ayant pas de certificat, l'application peut être arrêtée par l'antivirus. Vous pouvez alors choisir de ne pas l'installer ou cliquer sur "More Info" puis "Run anyway".
+        <br>
+        <img src="https://github.com/git-psi/YtFlow/blob/main/img/screenshot-win-antivirus.png" alt="Screenshot Windows Antivirus" style="max-width:100%;">
+    </blockquote>
 </details>
 <details>
     <summary>
         La fonctionnalité Spotify ne fonctionne pas
     </summary>
-    À cause de restrictions imposées par Spotify, cette fonctionnalité ne peut pas être activée par défaut. 
-    Pour l'activer, rien de plus simple: envoie-moi l'adresse email du compte Spotify que tu souhaites utiliser, à <a class='link-body-emphasis' href="mailto:perdu.felix@proton.me?subject=Activer%20l%27option%20pour%20mon%20compte%20Spotify&body=Pourrais tu activer la fonctionnalité Spotify pour: [email].">perdu.felix@proton.me</a> (ou sur n'importe quelle plateforme).
+    <blockquote>
+        À cause de restrictions imposées par Spotify, cette fonctionnalité ne peut pas être activée par défaut. 
+        Pour l'activer, rien de plus simple: envoie-moi l'adresse email du compte Spotify que tu souhaites utiliser, à <a class='link-body-emphasis' href="mailto:perdu.felix@proton.me?subject=Activer%20l%27option%20pour%20mon%20compte%20Spotify&body=Pourrais tu activer la fonctionnalité Spotify pour: [email].">perdu.felix@proton.me</a> (ou sur n'importe quelle plateforme).
+    </blockquote>
 </details>
 
 ## Contribuer

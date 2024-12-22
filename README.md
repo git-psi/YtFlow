@@ -12,7 +12,7 @@ YtFlow est une application qui vous permet de télécharger facilement de la mus
 ## Installation
 
 > [!WARNING]
-> YtFlow est disponible uniquement sur Windows et Linux, il n'y a actuellement pas de support pour Mac.
+> YtFlow est disponible uniquement sur Windows et Linux, il n'y a actuellement pas de support pour Mac.\
 > [!WARNING]
 > YtFlow est disponible uniquement sur Windows et Linux, il n'y a actuellement pas de support pour Mac.
 

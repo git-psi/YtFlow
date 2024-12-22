@@ -31,7 +31,7 @@ Vous pouvez télécharger l'application dans les formats suivants :
 
 ## Contribuer
 
-Les contributions sont les bienvenues ! Si vous avez remarqué des bugs, des suggestions ou des améliorations, n'hésitez pas à ouvrir un [problème](https://github.com/git-psi/YtFlow/issues) ou à m'envoyer un mail à perdu.felix [at] proton.me.
+Les contributions sont les bienvenues ! Si vous avez remarqué des bugs, des suggestions ou des améliorations, n'hésitez pas à ouvrir un [problème](https://github.com/git-psi/YtFlow/issues) ou à m'envoyer un mail à perdu.felix@proton.me.
 
 ## Licence
 

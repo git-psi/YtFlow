@@ -1,9 +1,18 @@
 # YtFlow
 
+## Fonctionnalités
+
+- Téléchargez de la musique et des vidéos.
+- Interface conviviale avec un guide d'intégration.
+- Intégration des playlists Spotify (l'accès à cette fonctionnalité doit être demandé).
+- Mises à jour automatiques pour vous assurer d'avoir les dernières fonctionnalités.
+
 YtFlow est une application qui vous permet de télécharger facilement de la musique et des vidéos depuis YouTube.
 
 ## Installation
 
+> [!WARNING]
+> YtFlow est disponible uniquement sur Windows et Linux, il n'y a actuellement pas de support pour Mac.
 > [!WARNING]
 > YtFlow est disponible uniquement sur Windows et Linux, il n'y a actuellement pas de support pour Mac.
 
@@ -21,13 +30,6 @@ Vous pouvez télécharger l'application dans les formats suivants :
 2. **Recherchez du contenu** : Utilisez la barre de recherche pour coller une URL YouTube ou entrer des mots-clés pour trouver des vidéos.
 3. **Téléchargez** : Sélectionnez le format souhaité (audio ou vidéo) et cliquez sur le bouton de téléchargement.
 4. **Gérez les téléchargements** : Surveillez votre file d'attente de téléchargements et gérez vos fichiers téléchargés depuis les paramètres.
-
-## Fonctionnalités
-
-- Téléchargez de la musique et des vidéos.
-- Interface conviviale avec un guide d'intégration.
-- Intégration des playlists Spotify, l'accés à cette fonctionnalité doit être demandé.
-- Mises à jour automatiques pour vous assurer d'avoir les dernières fonctionnalités.
 
 ## Contribuer
 

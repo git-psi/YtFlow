@@ -23,7 +23,7 @@ Vous pouvez télécharger l'application dans les formats suivants :
 - [AppImage](https://github.com/git-psi/YtFlow/releases/latest/download/YtFlow.AppImage) - Un format d'application portable.
 - [Paquet Debian](https://github.com/git-psi/YtFlow/releases/latest/download/YtFlow.deb) - Pour les distributions basées sur Debian.
 
-## Problème possibles
+## Problèmes possibles
 <details>
     <summary>
         Lors de son installation sur Windows, l'application est arrêtée par l'antivirus
@@ -40,7 +40,7 @@ Vous pouvez télécharger l'application dans les formats suivants :
     </summary>
     <blockquote>
         À cause de restrictions imposées par Spotify, cette fonctionnalité ne peut pas être activée par défaut. 
-        Pour l'activer, rien de plus simple: envoie-moi l'adresse email du compte Spotify que tu souhaites utiliser, à <a class='link-body-emphasis' href="mailto:perdu.felix@proton.me?subject=Activer%20l%27option%20pour%20mon%20compte%20Spotify&body=Pourrais tu activer la fonctionnalité Spotify pour: [email].">perdu.felix@proton.me</a> (ou sur n'importe quelle plateforme).
+        Pour l'activer, rien de plus simple : envoyez-moi l'adresse email du compte Spotify que vous souhaitez utiliser, à <a class='link-body-emphasis' href="mailto:perdu.felix@proton.me?subject=Activer%20l%27option%20pour%20mon%20compte%20Spotify&body=Pourrais-tu activer la fonctionnalité Spotify pour: [email].">perdu.felix@proton.me</a> (ou sur n'importe quelle plateforme).
     </blockquote>
 </details>
 

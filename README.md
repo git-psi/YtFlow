@@ -51,3 +51,13 @@ Les contributions sont les bienvenues ! Si vous avez remarqué des bugs, des sug
 ## Licence
 
 Ce projet est sous licence MIT. Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## Outils Utilisés
+
+Ce projet utilise plusieurs outils et bibliothèques pour fonctionner efficacement :
+
+- [**Electron**](https://www.electronjs.org/)
+- [**FFmpeg**](https://www.npmjs.com/package/fluent-ffmpeg)
+- [**@distube/ytdl-core**](https://github.com/distubejs/ytdl-core)
+- [**Bootstrap**](https://getbootstrap.com/)
+- Et d'autres encores...

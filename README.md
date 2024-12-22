@@ -31,7 +31,7 @@ Vous pouvez télécharger l'application dans les formats suivants :
     <blockquote>
         N'ayant pas de certificat, l'application peut être arrêtée par l'antivirus. Vous pouvez alors choisir de ne pas l'installer ou cliquer sur "More Info" puis "Run anyway".
         <br>
-        <img src="https://github.com/git-psi/YtFlow/blob/main/img/screenshot-win-antivirus.png" alt="Screenshot Windows Antivirus" style="max-width:100%;">
+        <img src="https://github.com/git-psi/YtFlow/blob/main/img/screenshot-win-antivirus.png" alt="Screenshot Windows Antivirus" style="max-width:400px;">
     </blockquote>
 </details>
 <details>

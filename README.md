@@ -48,10 +48,6 @@ Vous pouvez télécharger l'application dans les formats suivants :
 
 Les contributions sont les bienvenues ! Si vous avez remarqué des bugs, des suggestions ou des améliorations, n'hésitez pas à ouvrir un [problème](https://github.com/git-psi/YtFlow/issues) ou à m'envoyer un mail à perdu.felix@proton.me.
 
-## Licence
-
-Ce projet est sous licence MIT. Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
-
 ## Outils Utilisés
 
 Ce projet utilise plusieurs outils et bibliothèques pour fonctionner efficacement :
@@ -61,3 +57,7 @@ Ce projet utilise plusieurs outils et bibliothèques pour fonctionner efficaceme
 - [**@distube/ytdl-core**](https://github.com/distubejs/ytdl-core)
 - [**Bootstrap**](https://getbootstrap.com/)
 - Et d'autres encores...
+
+## Licence
+
+Ce projet est sous licence MIT. Consultez le fichier [LICENSE](LICENSE) pour plus de détails.

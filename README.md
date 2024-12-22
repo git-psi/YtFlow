@@ -1,8 +1,6 @@
 # YtFlow
 
-YtFlow est une application qui vous permet de télécharger facilement de la musique et des vidéos depuis YouTube.
-
-## Fonctionnalités
+## 🌟 Fonctionnalités
 
 - Téléchargez de la musique et des vidéos.
 - Interface conviviale avec un guide d'intégration.
@@ -10,7 +8,7 @@ YtFlow est une application qui vous permet de télécharger facilement de la mus
 - Mises à jour automatiques pour vous assurer d'avoir les dernières fonctionnalités.
 
 
-## Installation
+## 🔧 Installation
 
 > [!Note]
 > YtFlow est disponible uniquement sur Windows et Linux, il n'y a actuellement pas de support pour Mac.
@@ -23,7 +21,7 @@ Vous pouvez télécharger l'application dans les formats suivants :
 - [AppImage](https://github.com/git-psi/YtFlow/releases/latest/download/YtFlow.AppImage) - Un format d'application portable.
 - [Paquet Debian](https://github.com/git-psi/YtFlow/releases/latest/download/YtFlow.deb) - Pour les distributions basées sur Debian.
 
-## Problèmes possibles
+## ⚠️ Problèmes possibles
 <details>
     <summary>
         Lors de son installation sur Windows, l'application est arrêtée par l'antivirus
@@ -44,11 +42,11 @@ Vous pouvez télécharger l'application dans les formats suivants :
     </blockquote>
 </details>
 
-## Contribuer
+## 🤝 Contribuer
 
 Les contributions sont les bienvenues ! Si vous avez remarqué des bugs, des suggestions ou des améliorations, n'hésitez pas à ouvrir un [problème](https://github.com/git-psi/YtFlow/issues) ou à m'envoyer un mail à perdu.felix@proton.me.
 
-## Outils Utilisés
+## 🛠️ Outils Utilisés
 
 Ce projet utilise plusieurs outils et bibliothèques pour fonctionner efficacement :
 
@@ -58,6 +56,6 @@ Ce projet utilise plusieurs outils et bibliothèques pour fonctionner efficaceme
 - [**Bootstrap**](https://getbootstrap.com/)
 - Et d'autres encores...
 
-## Licence
+## 📜 Licence
 
 Ce projet est sous licence MIT. Consultez le fichier [LICENSE](LICENSE) pour plus de détails.

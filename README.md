@@ -5,12 +5,12 @@ YtFlow est une application qui vous permet de télécharger facilement de la mus
 ## Installation
 
 > [!WARNING]
-> YtFlow est disponible pour Windows et Linux. Actuellement, il n'y a pas de support pour Mac.
+> YtFlow est disponible uniquement sur Windows et Linux, il n'y a actuellement pas de support pour Mac.
 
-### Pour Windows :
+### Télécharger pour Windows :
 - [Télécharger l'installateur](https://github.com/git-psi/YtFlow/releases/latest/download/YtFlow-Setup-windows.exe)
 
-### Pour Linux :
+### Télécharger pour Linux :
 Vous pouvez télécharger l'application dans les formats suivants :
 - [AppImage](https://github.com/git-psi/YtFlow/releases/latest/download/YtFlow.AppImage) - Un format d'application portable.
 - [Paquet Debian](https://github.com/git-psi/YtFlow/releases/latest/download/YtFlow.deb) - Pour les distributions basées sur Debian.
@@ -24,14 +24,14 @@ Vous pouvez télécharger l'application dans les formats suivants :
 
 ## Fonctionnalités
 
-- Téléchargez de la musique et des vidéos dans divers formats (MP3, MP4).
+- Téléchargez de la musique et des vidéos.
 - Interface conviviale avec un guide d'intégration.
-- Intégration des playlists Spotify.
+- Intégration des playlists Spotify, l'accés à cette fonctionnalité doit être demandé.
 - Mises à jour automatiques pour vous assurer d'avoir les dernières fonctionnalités.
 
 ## Contribuer
 
-Les contributions sont les bienvenues ! Si vous avez des suggestions ou des améliorations, n'hésitez pas à ouvrir un problème ou à soumettre une demande de tirage sur [GitHub](https://github.com/git-psi/YtFlow).
+Les contributions sont les bienvenues ! Si vous avez remarqué des bugs, des suggestions ou des améliorations, n'hésitez pas à ouvrir un [problème](https://github.com/git-psi/YtFlow/issues) ou à m'envoyer un mail à perdu.felix [at] proton.me.
 
 ## Licence
 

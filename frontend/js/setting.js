@@ -22,6 +22,10 @@ const hiddenSpan = document.getElementById('hidden-span');
 // Ajout d'une variable pour stocker le chemin complet
 let fullFolderPath = '';
 
+// Get references to quality selection elements
+const audioQualitySelect = document.getElementById('audioQualitySelect');
+const videoQualitySelect = document.getElementById('videoQualitySelect');
+
 // Adjusts the displayed path to fit within the input width
 function adjustPathToFit(dir) {
     fullFolderPath = dir; // Stocke le chemin complet
@@ -51,7 +55,9 @@ const settingsToLoad = [
         fullFolderPath = value;
     }},
     {key: 'firstResult', setter: (value) => firstResult = value},
-    {key: 'automaticUpdate', setter: (value) => automaticUpdate = value}, 
+    {key: 'automaticUpdate', setter: (value) => automaticUpdate = value},
+    {key: 'audioQuality', setter: (value) => audioQualitySelect.value = value},
+    {key: 'videoQuality', setter: (value) => videoQualitySelect.value = value},
 ];
 
 // Load each setting
@@ -75,6 +81,8 @@ chooseFolderBtn.addEventListener('click', async () => {
 saveSettingsBtn.addEventListener('click', () => {
     const automaticUpdateValue = automaticUpdateToggle.checked;
     const firstResultValue = firstResultToggle.checked;
+    const audioQualityValue = audioQualitySelect.value;
+    const videoQualityValue = videoQualitySelect.value;
 
     savedDownloadDirectory = fullFolderPath; // Utilise le chemin complet
     automaticUpdate = automaticUpdateValue;
@@ -82,7 +90,9 @@ saveSettingsBtn.addEventListener('click', () => {
     window.electronAPI.saveSettings([
         ['selectedFolder', fullFolderPath], // Sauvegarde le chemin complet
         ['automaticUpdate', automaticUpdateValue],
-        ['firstResult', firstResultValue]
+        ['firstResult', firstResultValue],
+        ['audioQuality', audioQualityValue],
+        ['videoQuality', videoQualityValue]
     ]);
 
     settingModalObject.hide();

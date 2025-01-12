@@ -49,7 +49,9 @@ const defaultSettings = {
     firstResult: false,
     onboardingCompleted: false,
     spotifyModalValidate: false,
-}
+    audioQuality: 'medium',
+    videoQuality: 'high',
+};
 
 module.exports = (store, win, dialog, shell, app) => {
     // Initialize settings with default values if they don't exist

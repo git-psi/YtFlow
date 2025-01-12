@@ -78,13 +78,13 @@ async function startDownload() {
             return
         }
         } catch (error) {
-        console.error('Erreur lors du téléchargement :', error);
-        downloadQueueList.classList.add("download-paused")
-        currentDownloadingItem.classList.remove("downloading")
-        isDownloadingPaused = true
-        isDownloading = false
-        createAlert("Une erreur à eu lieu lors du téléchargement", "danger")
-        return
+            console.error('Erreur lors du téléchargement :', error);
+            downloadQueueList.classList.add("download-paused")
+            currentDownloadingItem.classList.remove("downloading")
+            isDownloadingPaused = true
+            isDownloading = false
+            createAlert("Une erreur à eu lieu lors du téléchargement", "danger")
+            return
         }
     }
     // Remove the item

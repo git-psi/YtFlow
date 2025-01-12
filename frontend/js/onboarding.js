@@ -10,6 +10,7 @@ const popoverList = [];
 });
 
 const onBoardingAlreadyCompleted = window.electronAPI.getSetting('onboardingCompleted').then((onboardingCompleted) => {
+    console.log(onboardingCompleted)
     if (!onboardingCompleted) {
         onboardingDiv.classList.add('view');
         setTimeout(() => {
@@ -34,13 +35,18 @@ const onBoardingAlreadyCompleted = window.electronAPI.getSetting('onboardingComp
 
 // After onboarding is completed, set the flag
 function completeOnboarding() {
-    if (!onBoardingAlreadyCompleted) {
-        window.electronAPI.saveSettings([['onboardingCompleted', true]]);
-    }
-    onboardingInProgress = false
-    if (haveToOpenUpdateModal) {
-updateModal.show()
-    }
+    window.electronAPI.getSetting('onboardingCompleted').then((onBoardingAlreadyCompleted) => {
+        console.log(1);
+        console.log(onBoardingAlreadyCompleted);
+        console.log(1);
+        if (!onBoardingAlreadyCompleted) {
+            window.electronAPI.saveSettings([['onboardingCompleted', true]]);
+        }
+        onboardingInProgress = false;
+        if (haveToOpenUpdateModal) {
+            updateModal.show();
+        }
+    });
 }
 
 function showPopover(num = 0) {

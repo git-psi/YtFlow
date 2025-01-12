@@ -12,15 +12,22 @@
     "executableName": "YtFlow",
     "win": {
       "icon": "build/icon.ico",
-      "target": ["nsis"],
+      "target": [
+        "nsis"
+      ],
       "artifactName": "YtFlow-Setup-windows.${ext}"
     },
     "linux": {
       "icon": "build/icon.png",
-      "target": ["deb","AppImage"],
+      "target": [
+        "deb",
+        "AppImage"
+      ],
       "artifactName": "YtFlow.${ext}",
       "category": "Audio",
-      "executableArgs": ["--no-sandbox"]
+      "executableArgs": [
+        "--no-sandbox"
+      ]
     }
   },
   "main": "backend/main.js",
@@ -41,7 +48,7 @@
     "electron-builder": "^25.1.7"
   },
   "dependencies": {
-    "@distube/ytdl-core": "^4.15.1",
+    "@distube/ytdl-core": "^4.15.7",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",

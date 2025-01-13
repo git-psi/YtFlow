@@ -21,7 +21,9 @@ const audioQualityMap = {
     high: '256k',
 };
 
-module.exports = (store, path) => {
+let isDownloading = false
+
+module.exports = (store, path, win) => {
     // Set ffmpeg path
     const ffmpegExecutable = ffmpegPath.includes('app.asar')
         ? ffmpegPath.replace('app.asar', 'app.asar.unpacked')
@@ -49,7 +51,17 @@ module.exports = (store, path) => {
         });
     }
 
+    function endDownload(){
+        isDownloading = false
+        setTimeout(() => {
+            if(!isDownloading){win.setProgressBar(-1);}
+        }, 1000);
+    }
+
     async function downloadMusic(event, url, title, thumbnail_url, author, format){
+        isDownloading = true
+        win.setProgressBar(2)
+
         // Get the selected video quality from the settings
         const videoQuality = store.get('videoQuality', 'high');
         const audioQuality = store.get('audioQuality', 'high');
@@ -74,11 +86,12 @@ module.exports = (store, path) => {
             const downloadTempPath = fileDownloadPath.replace(`.${format}`, `.${format}.temp`);
             // Set the thumbnail path
             const thumbnailPath = path.join(downloadPath, 'thumbnail.jpg.temp');
-            // Download the thumbnail
-            await downloadThumbnail(thumbnail_url, thumbnailPath);
         
             // Download the music
             if (format == "mp3"){
+                // Download the thumbnail
+                await downloadThumbnail(thumbnail_url, thumbnailPath);
+
                 const audioStream = ytdl(url, { quality: 'highestaudio' });
                 const audioFile = fs.createWriteStream(downloadTempPath);
                 audioStream.pipe(audioFile);
@@ -92,11 +105,11 @@ module.exports = (store, path) => {
                 // Delete the thumbnail and the temporary file
                 fs.unlink(thumbnailPath, (err) => {
                 if (err) {
-                    console.log('Erreur lors du remplacement du fichier original: ' + err);
+                    console.error('Erreur lors du remplacement du fichier original: ' + err);
                 }});
                 fs.unlink(downloadTempPath, (err) => {
                 if (err) {
-                    console.log('Erreur lors du remplacement du fichier original: ' + err);
+                    console.error('Erreur lors du remplacement du fichier original: ' + err);
                 }});
             // If the format is mp4
             }else {
@@ -124,28 +137,26 @@ module.exports = (store, path) => {
                 });
             
                 // Merge the audio and the video
-                await mergeAudioAndVideo(fileDownloadPath, downloadTempPathVideo, downloadTempPathAudio, thumbnailPath, author, videoQuality, audioQuality, downloadPath);
+                await mergeAudioAndVideo(fileDownloadPath, downloadTempPathVideo, downloadTempPathAudio, author, videoQuality, audioQuality, downloadPath);
                 
-                // Delete the thumbnail and the temporary files
-                fs.unlink(thumbnailPath, (err) => {
-                if (err) {
-                    console.log('Erreur lors du remplacement du fichier original: ' + err);
-                }});
+                // Delete temporary files
                 fs.unlink(downloadTempPathVideo, (err) => {
                 if (err) {
-                    console.log('Erreur lors du remplacement du fichier original: ' + err);
+                    console.error('Erreur lors du remplacement du fichier original: ' + err);
                 }});
                 fs.unlink(downloadTempPathAudio, (err) => {
                 if (err) {
-                    console.log('Erreur lors du remplacement du fichier original: ' + err);
+                    console.error('Erreur lors du remplacement du fichier original: ' + err);
                 }});
             }
         
             // Return success
+            endDownload();
             return { success: true };
         } catch (error) {
-            console.log(error);
+            console.error(error);
             deleteTempFiles(downloadPath);
+            endDownload();
             return { error: 1 };
         }
     };
@@ -169,7 +180,7 @@ module.exports = (store, path) => {
                     resolve();
                 })
                 .on('error', (err) => {
-                    console.log(err);
+                    console.error(err);
                     deleteTempFiles(path.dirname(dir));
                     reject(err);
                 });
@@ -182,7 +193,6 @@ module.exports = (store, path) => {
             const command = ffmpeg()
                 .input(videoPath)
                 .input(audioPath)
-                .input(thumbnailPath)
                 .outputOptions('-metadata', `artist=${author}`)
                 .outputOptions('-id3v2_version', '3')
                 .outputOptions('-c:a', 'aac')  // Encode audio to AAC
@@ -202,7 +212,7 @@ module.exports = (store, path) => {
                     resolve();
                 })
                 .on('error', (err) => {
-                    console.log(err);
+                    console.error(err);
                     deleteTempFiles(path.dirname(dir));
                     reject(err);
                 });

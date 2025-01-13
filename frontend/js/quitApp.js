@@ -12,6 +12,6 @@ window.electronAPI.wantQuitApp(() => {
             window.electronAPI.quitApp();
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 })

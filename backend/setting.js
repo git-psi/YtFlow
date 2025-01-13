@@ -50,7 +50,7 @@ const defaultSettings = {
     onboardingCompleted: false,
     spotifyModalValidate: false,
     audioQuality: 'medium',
-    videoQuality: 'high',
+    videoQuality: 'max',
 };
 
 module.exports = (store, win, dialog, shell, app) => {
@@ -116,7 +116,7 @@ module.exports = (store, win, dialog, shell, app) => {
                     await shell.openPath(folderPath);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 return {error: 'Error opening folder'}
             }
         } else return {error: 'No folder selected, check settings'}

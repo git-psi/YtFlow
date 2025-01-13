@@ -41,7 +41,7 @@ function createWindow() {
         autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
-            devTools: true,
+            devTools: process.env.NODE_ENV !== 'production',
         },
     });
 }
@@ -70,7 +70,7 @@ app.whenReady().then(async () => {
     innertube = await Innertube.create();
 
     // Require all other js files
-    const downloadJS = require('./download')(store, path)
+    const downloadJS = require('./download')(store, path, win)
     const settingJS = require('./setting')(store, win, dialog, shell, app)
     const updateJS = require('./update')(win, app, settingJS, Notification)
     const queryYoutubeJS = require('./query/youtube')(innertube)

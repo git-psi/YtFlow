@@ -1,3 +1,4 @@
 {
-    "npm-scripts.showStartNotification": false
+    "npm-scripts.showStartNotification": false,
+    "search.useIgnoreFiles": false
 }

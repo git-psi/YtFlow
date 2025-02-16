@@ -1,6 +1,6 @@
 {
   "name": "ytflow",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": "https://github.com/git-psi/YtFlow",
   "publish": {
     "provider": "github",
@@ -48,7 +48,7 @@
     "electron-builder": "^25.1.7"
   },
   "dependencies": {
-    "@distube/ytdl-core": "^4.15.7",
+    "@distube/ytdl-core": "^4.16.4",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",

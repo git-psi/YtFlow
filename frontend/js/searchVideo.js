@@ -62,8 +62,10 @@ async function searchVideos(search) {
         addMusicBtn.addEventListener('click', () => {
             new MusicItem(infoUrl, infoTitle, infoAuthor, infoThumbnail, infoDurationString)
 
-            deleteSearchResults()
-            searchModalObject.hide()
+            if (!isControlPressed){
+                deleteSearchResults()
+                searchModalObject.hide()
+            }
         })
         viewVideoBtn.addEventListener('click', () => {
             videoTitle.innerText = infoTitle

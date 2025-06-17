@@ -33,6 +33,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   wantQuitApp: (callback) => ipcRenderer.on('want-quit-app', callback),
 
   // Functions for messages and notifications display
-  showMessage: (message) => ipcRenderer.on('show-message', message),
   showUpdateModal: (versions) => ipcRenderer.on('show-update', versions),
+
+  // Function to handle search from string input
+  searchFromString: (input) => ipcRenderer.on('search-from-string', input),
 });

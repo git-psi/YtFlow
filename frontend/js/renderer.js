@@ -27,6 +27,10 @@ const downloadQueueList = document.getElementById('downloadQueue');
 // The button to open the folder
 const openFolderBtn = document.getElementById('openFolderBtn');
 
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('spotifyPlaylistsBtn').style.setProperty('display', 'none', 'important');
+});
+
 // When the user click on the open folder button, open the folder in wich the musics are downloaded
 openFolderBtn.addEventListener('click', async () => {
   const res = await window.electronAPI.openFolder()
@@ -83,8 +87,15 @@ searchBarForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const input = searchBarInput.value;
   
+  searchFromInput(input);
+});
+
+function searchFromInput(input){
   if (input){
-    if (isValidUrl(input)){
+    if (input.toLowerCase() == "spotify"){
+      document.getElementById('spotifyPlaylistsBtn').style.removeProperty('display', 'none', 'important');
+    }
+    else if (isValidUrl(input)){
       const musicItem = new MusicItem(url=input)
       musicItem.searchComplementaryInfo()
     }else {
@@ -98,7 +109,11 @@ searchBarForm.addEventListener('submit', async (event) => {
     searchBarInput.value = ""
     searchBarForm.classList.remove("url")
   }
-});
+}
+
+window.electronAPI.searchFromString((event, input) => {
+    searchFromInput(input);
+})
 
 // When the user click on the restart downloading button, restart the download
 restartDownloadingBtn.addEventListener('click', () => {
@@ -156,4 +171,20 @@ function hideTooltip() {
 // Hide all tooltips when any modal is closed
 document.addEventListener('hidden.bs.modal', () => {
     hideTooltip();
+});
+
+
+// Var to check if a modal is active
+let isControlPressed = false;
+
+// Listen for keydown and keyup events to check if the Control key is pressed
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey) {
+        isControlPressed = true;
+    }
+});
+document.addEventListener('keyup', function(event) {
+    if (event.key === 'Control') {
+        isControlPressed = false;
+    }
 });

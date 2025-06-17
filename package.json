@@ -1,6 +1,6 @@
 {
   "name": "ytflow",
-  "version": "1.0.1",
+  "version": "1.0.6",
   "repository": "https://github.com/git-psi/YtFlow",
   "publish": {
     "provider": "github",

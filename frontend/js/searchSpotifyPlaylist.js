@@ -59,12 +59,13 @@ async function showSpotifyPlaylists() {
             const addPlaylistBtn = resultItem.querySelector('.addPlaylistBtn')
             addPlaylistBtn.addEventListener('click', async () => {
                 // Hide search modal
-                searchModalObject.hide()
+                if (!isControlPressed){
+                    deleteSearchResults()
+                    searchModalObject.hide()
+                }
+
                 // Fetch tracks for this playlist
                 window.electronAPI.spotifyFetchPlaylistTracks(infoHref)
-                
-                // Clear search results
-                deleteSearchResults()
             })
 
             // Add click handler for the view playlist button if embed URL exists
@@ -103,14 +104,18 @@ window.electronAPI.addSpotifyPlaylistTracks(async (event, tracks) => {
             addingTracks = true
             const tracks = tracksToAdd.shift()
             for (const track of tracks) {
-                const { title, author, search } = track
-                const musicItem = new MusicItem("", title, author)
-                await musicItem.setFromSearch(search)
+                addSpotifyTrack(track)
             }
         }
-        addingTracks = false
     }
+    addingTracks = false
 })
+
+async function addSpotifyTrack(track){
+    const { title, author, search } = track
+    const musicItem = new MusicItem("", title, author)
+    await musicItem.setFromSearch(search)
+}
 
 // When the user click on the spotify connect button, generate a token
 const spotifyConnectBtn = document.getElementById('spotifyConnectBtn')

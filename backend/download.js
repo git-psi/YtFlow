@@ -59,6 +59,13 @@ module.exports = (store, path, win) => {
     }
 
     async function downloadMusic(event, url, title, thumbnail_url, author, format){
+        console.log("---------------\nAsking to download music:\nTitle: " + title +
+            "\nAuthor: " + author +
+            "\nURL: " + url +
+            "\nThumbnail URL: " + thumbnail_url +
+            "\nFormat: " + format +
+            "\n---------------");
+
         isDownloading = true
         win.setProgressBar(2)
 
@@ -75,11 +82,19 @@ module.exports = (store, path, win) => {
         }else if (!fs.existsSync(downloadPath)){
             return { error: "Le dossier choisi pour stocker les fichiers téléchargés n'existe pas" };
         }
+
+        console.log("Download path: " + downloadPath);
     
         // Try to download the music
         try {
             // Replace all forbidden characters in the title
-            title = title.replace(/[\\/:*?"<>|]/g, '')
+            newtitle = title.replace(/[\\/:*?"<>|]/g, '')
+
+            if (newtitle != title){
+                console.warn("Le titre contient des caractères interdits, ils ont été retirés, c'est maintenant: " + title);
+                title = newtitle;
+            }
+
             // Set the download path
             const fileDownloadPath = path.join(downloadPath, `${title}.${format}`);
             // Set the temporary download path
@@ -90,8 +105,12 @@ module.exports = (store, path, win) => {
             // Download the music
             if (format == "mp3"){
                 // Download the thumbnail
-                await downloadThumbnail(thumbnail_url, thumbnailPath);
 
+                console.log("Lancement du téléchargement de la miniature");
+                await downloadThumbnail(thumbnail_url, thumbnailPath);
+                console.log("Fin du téléchargement de la miniature");
+
+                console.log("Lancement du téléchargement de la musique");
                 const audioStream = ytdl(url, { quality: 'highestaudio' });
                 const audioFile = fs.createWriteStream(downloadTempPath);
                 audioStream.pipe(audioFile);
@@ -99,7 +118,9 @@ module.exports = (store, path, win) => {
                     audioFile.on('finish', resolve);
                     audioFile.on('error', reject);
                 });
+                console.log("Fin du téléchargement de la musique");
         
+                console.log("Lancement de l'ajout des métadonnées");
                 // Add metadata to the music
                 await addMetadata(fileDownloadPath, downloadTempPath, thumbnailPath, author, audioQuality, downloadPath);
                 // Delete the thumbnail and the temporary file
@@ -111,6 +132,10 @@ module.exports = (store, path, win) => {
                 if (err) {
                     console.error('Erreur lors du remplacement du fichier original: ' + err);
                 }});
+
+                console.log("Fin de l'ajout des métadonnées");
+                console.log('\x1b[32m', "--> Musique téléchargée avec succès dans le dossier: " + downloadPath);
+
             // If the format is mp4
             }else {
                 // Set the temporary download path for the audio
@@ -118,6 +143,7 @@ module.exports = (store, path, win) => {
                 // Set the temporary download path for the video
                 const downloadTempPathVideo = downloadTempPath.replace(`.${format}`, `-video.mp4`);
 
+                console.log("Lancement du téléchargement de la vidéo sans l'audio");
                 // Download the video
                 const videoStream = ytdl(url, { filter: 'videoonly', quality: 'highestvideo', format: 'mp4' });
                 const videoFile = fs.createWriteStream(downloadTempPathVideo);
@@ -126,7 +152,9 @@ module.exports = (store, path, win) => {
                     videoFile.on('finish', resolve);
                     videoFile.on('error', reject);
                 });
+                console.log("Fin du téléchargement de la vidéo sans l'audio");
 
+                console.log("Lancement du téléchargement de l'audio");
                 // Download the audio
                 const audioStream = ytdl(url, { filter: 'audioonly', quality: 'highestaudio' });
                 const audioFile = fs.createWriteStream(downloadTempPathAudio);
@@ -135,7 +163,9 @@ module.exports = (store, path, win) => {
                     audioFile.on('finish', resolve);
                     audioFile.on('error', reject);
                 });
+                console.log("Fin du téléchargement de l'audio");
             
+                console.log("Lancement de la fusion de l'audio et de la vidéo, et de l'ajout des métadonnées");
                 // Merge the audio and the video
                 await mergeAudioAndVideo(fileDownloadPath, downloadTempPathVideo, downloadTempPathAudio, author, videoQuality, audioQuality, downloadPath);
                 
@@ -148,6 +178,8 @@ module.exports = (store, path, win) => {
                 if (err) {
                     console.error('Erreur lors du remplacement du fichier original: ' + err);
                 }});
+                
+                console.log('\x1b[32m', "--> Vidéo téléchargée avec succès dans le dossier: " + downloadPath);
             }
         
             // Return success
@@ -155,6 +187,8 @@ module.exports = (store, path, win) => {
             return { success: true };
         } catch (error) {
             console.error(error);
+
+            console.error("Une erreur est survenue lors du téléchargement de la musique, suppression des fichiers temporaires");
             deleteTempFiles(downloadPath);
             endDownload();
             return { error: 1 };

@@ -57,6 +57,8 @@ function showWindow(){
 }
 
 app.whenReady().then(async () => {
+    const arg = process.argv[2];
+
     // Open the window when the app is ready
     createWindow()
 
@@ -114,6 +116,11 @@ app.whenReady().then(async () => {
         }
     });
     
+    console.log(`App started with argument: ${arg}`);
+    if (arg){
+        console.log(`App started with argument: ${arg}`);
+        win.webContents.send('search-from-string', arg)
+    }
 });
 
 app.on('before-quit', () => {

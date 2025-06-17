@@ -1,8 +1,3 @@
-// When the backend send a message, create an alert
-window.electronAPI.showMessage((event, message) => {
-  createAlert(message); 
-});
-
 const alertContainer = document.getElementById('alertContainer')
 // Create an alert
 function createAlert(message, type="primary") {
